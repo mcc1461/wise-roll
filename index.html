@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta Tags and Title -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wise Roll</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./dist/output.css" />
+    <link rel="icon" href="favicon.ico" />
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <!-- Custom Styles -->
+    <style>
+      /* General Styles */
+      body {
+        background-color: #edf2f7; /* Soft Gray */
+        color: #2d3748; /* Dark Slate */
+        font-family: "Helvetica Neue", sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      header {
+        background-color: #252858; /* Deep Purple */
+        color: #edf2f7; /* Soft Gray */
+        padding: 1.5em 0;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+      header h1 {
+        font-size: 3.5em; /* Scalable font size */
+        font-weight: bold;
+        margin: 0;
+      }
+
+      /* Logo */
+      .logo {
+        position: absolute;
+        left: 2%;
+        top: 10%;
+        width: 9em; /* Relative sizing */
+        height: auto;
+      }
+
+      /* Main Content */
+      main {
+        flex: 1;
+        max-width: 90%;
+        width: 90%;
+        margin: 2em auto;
+        padding: 1.5em;
+        background-color: #ffffff; /* White */
+        border-radius: 1em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Rules Section */
+      .rules-box {
+        background-color: #d1f1f1; /* Very Light Gray */
+        border-left: 0.3em solid #38b2ac; /* Bright Cyan border */
+        color: #2d3748; /* Dark Slate text */
+        padding: 1em;
+        margin-bottom: 2em;
+        border-radius: 0.5em;
+      }
+      .rules-box h2 {
+        margin-top: 0;
+        font-size: 1.75em;
+        color: #6b46c1; /* Deep Purple */
+      }
+      .rules-box ul {
+        padding-left: 1.5em;
+      }
+      .rules-box li {
+        margin-bottom: 0.75em;
+        font-size: 1.25em;
+      }
+
+      /* Game Info */
+      .game-info {
+        text-align: center;
+        margin-bottom: 1em;
+      }
+      .game-info h2 {
+        margin: 0;
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #38b2ac; /* Bright Cyan */
+      }
+      .game-info p {
+        margin: 0.5em 0 0;
+        font-size: 2.1em;
+        font-weight: bold;
+        color: #6b46c1; /* Deep Purple */
+      }
+
+      /* Player Scores */
+      .player-scores {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2em;
+        padding: 0 10%;
+      }
+      .player-card {
+        flex: 1;
+        margin: 0 0.5em;
+        padding: 1em;
+        border-radius: 0.75em;
+        text-align: center;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .player-card.active {
+        background-color: #6b46c1; /* Deep Purple */
+        color: #edf2f7; /* Soft Gray */
+        border: 0.2em solid #38b2ac; /* Bright Cyan border */
+        box-shadow: 0 0 15px rgba(56, 178, 172, 0.6); /* Subtle Cyan shadow */
+      }
+      .player-card.inactive {
+        background-color: #f1f1ff; /* Medium Gray */
+        color: #2d3748; /* Dark Slate text */
+      }
+      .player-card h3 {
+        margin-top: 0;
+        font-size: 1.75em;
+      }
+      .player-card p {
+        margin: 0.75em 0 0;
+        font-size: 1.5em;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 4em !important;
+        margin-bottom: 2em;
+        flex-wrap: wrap;
+        gap: 2em;
+      }
+      .action-buttons button {
+        padding: 0.75em 2em;
+        font-size: 1em;
+        font-weight: bold;
+        border: none;
+        border-radius: 0.5em;
+        cursor: pointer;
+        min-width: 140px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+      .action-buttons button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* Roll Button */
+      .roll-button {
+        min-width: 220px !important;
+        min-height: 70px;
+        display: inline-flex;
+        font-family: "Nunito", sans-serif;
+        font-size: 2em !important;
+        font-weight: 700;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 1.3px;
+        color: #ffffff; /* White text for better contrast */
+        background: linear-gradient(
+          90deg,
+          #099099 0%,
+          /* Bright Cyan */ #6b46c1 100% /* Deep Purple */
+        );
+        border: none;
+        border-radius: 7em !important; /* Fully rounded */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
+          background 0.3s ease-in-out;
+        cursor: pointer;
+        outline: none;
+        position: relative;
+        padding: 0.5em;
+        margin-bottom: 2em;
+
+        /* Improved Text Readability */
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Enhanced Hover and Focus Effects */
+      .roll-button:hover,
+      .roll-button:focus {
+        transform: scale(1.07); /* Slightly enlarge the button */
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+        background: linear-gradient(
+          90deg,
+          #6b46c1 0%,
+          /* Deep Purple */ #099099 100% /* Bright Cyan */
+        );
+      }
+
+      /* Refined Ring Animation */
+      .roll-button::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: 3em;
+        border: 0.3em solid #09909999; /* Semi-transparent border */
+        box-shadow: 0 0 25px rgba(56, 178, 172, 0.3); /* Subtle shadow */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+
+      .roll-button:hover::before,
+      .roll-button:focus::before {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.5); /* Expand the ring */
+      }
+
+      /* Remove Existing ::after Pseudo-element if Not Needed */
+      .roll-button::after {
+        display: none; /* Hide the existing ::after for clarity */
+      }
+
+      /* Optional Continuous Ring Animation */
+      @keyframes alternate-ring {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.7;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(2);
+          opacity: 0;
+        }
+      }
+
+      .roll-button::before {
+        animation: alternate-ring 3s infinite;
+      }
+
+      .roll-button:hover::before,
+      .roll-button:focus::before {
+        animation: none; /* Stop animation on hover/focus */
+      }
+
+      /* Quit Game Button */
+      .quit-part {
+        display: flex;
+        font-size: 1.5em;
+        justify-content: space-around;
+        gap: 1em;
+      }
+      .toggle-game-button {
+        background-color: #dd6b20; /* Sunset Orange */
+        color: #ffffff;
+      }
+      .quit-button {
+        background-color: #c53030; /* Darker Red */
+        color: #ffffff;
+      }
+
+      .toggle-game-button:hover,
+      .toggle-game-button:focus {
+        background-color: #c05621; /* Darker Sunset Orange on hover */
+        transform: translateY(-2px);
+      }
+
+      .quit-button:hover,
+      .quit-button:focus {
+        background-color: #9b2c2c; /* Even Darker Red on hover */
+        transform: translateY(-2px);
+      }
+
+      /* Dice and Rolls Display */
+      .dice-rolls {
+        text-align: center;
+        margin-bottom: 0.5em;
+      }
+      .dice-images {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        min-height: 55px !important;
+      }
+      .dice-images img {
+        width: 5em !important; /* Relative sizing */
+        height: 5em !important; /* Relative sizing */
+        margin: 0.3em;
+      }
+      .rolls-line {
+        min-height: 3.5em;
+        font-size: 2.25em;
+        margin-top: 0.5em;
+        font-weight: bold;
+        color: #099099; /* Bright Cyan */
+      }
+      .output-message {
+        min-height: 2em;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #6b46c1; /* Deep Purple */
+      }
+
+      /* Footer */
+      footer {
+        background-color: #252858; /* Dark Slate */
+        color: rgb(9, 254, 225); /* Cool Gray */
+        text-align: center;
+        font-size: 1.5em;
+        padding: 0.5em;
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+      }
+      footer #created {
+        font-size: 1.1em !important;
+        color: rgba(9, 254, 225, 0.7) !important; /* Cool Gray */
+        margin-bottom: -1em;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background-color: #4a5568; /* Darker Blue-Gray */
+        margin: auto; /* Center horizontally */
+        padding: 2em;
+        border: 0.2em solid #38b2ac; /* Bright Cyan border */
+        width: 90%;
+        max-width: 450px; /* Increased max-width */
+        border-radius: 1em;
+        text-align: center;
+        color: #edf2f7; /* Very Light Gray */
+      }
+
+      .modal-buttons {
+        margin-top: 1.5em;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+
+      .modal-buttons button {
+        padding: 0.75em 1.5em;
+        font-size: 1em;
+        border: none;
+        border-radius: 0.5em;
+        cursor: pointer;
+        margin: 0.5em;
+        min-width: 120px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .confirm-button {
+        background-color: #dd6b20; /* Sunset Orange */
+        color: #ffffff;
+      }
+
+      .cancel-button {
+        background-color: #c53030; /* Darker Red */
+        color: #ffffff;
+      }
+
+      .confirm-button:hover,
+      .confirm-button:focus {
+        background-color: #c05621; /* Darker Sunset Orange on hover */
+        transform: translateY(-2px);
+      }
+
+      .cancel-button:hover,
+      .cancel-button:focus {
+        background-color: #9b2c2c; /* Even Darker Red on hover */
+        transform: translateY(-2px);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        /* Player Scores: Stack vertically */
+        .player-scores {
+          flex-direction: column;
+          padding: 0;
+        }
+
+        .player-card {
+          margin: 0.5em 0;
+          padding: 1em;
+        }
+
+        /* Action Buttons: Stack vertically */
+        .action-buttons {
+          flex-direction: column;
+          gap: 1.5em;
+        }
+
+        .action-buttons button {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        /* Roll Button: Adjust size */
+        .roll-button {
+          min-width: 180px;
+          min-height: 60px;
+          font-size: 1.75em !important;
+        }
+
+        .roll-button::before {
+          min-width: calc(180px + 0.75em);
+          min-height: calc(60px + 0.75em);
+        }
+
+        /* Modal Content: Adjust size */
+        .modal-content {
+          width: 90%;
+          max-width: 350px;
+        }
+
+        /* Font Sizes */
+        .rules-box h2 {
+          font-size: 1.75em;
+        }
+
+        .rules-box li {
+          font-size: 1.1em;
+        }
+
+        .game-info h2 {
+          font-size: 2em;
+        }
+
+        .game-info p {
+          font-size: 1.5em;
+        }
+
+        .player-card h3 {
+          font-size: 1.5em;
+        }
+
+        .player-card p {
+          font-size: 1.25em;
+        }
+
+        .rolls-line {
+          font-size: 1em;
+        }
+
+        .output-message {
+          font-size: 1.25em;
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* Further adjustments for very small screens */
+
+        /* Header */
+        .logo {
+          width: 5em;
+        }
+
+        header h1 {
+          font-size: 1.75em;
+        }
+
+        /* Player Scores */
+        .player-card {
+          padding: 0.75em;
+        }
+
+        /* Action Buttons */
+        .action-buttons button {
+          max-width: 100%;
+        }
+
+        /* Roll Button */
+        .roll-button {
+          min-width: 140px;
+          min-height: 50px;
+          font-size: 1.5em !important;
+        }
+
+        .roll-button::before {
+          min-width: calc(140px + 0.75em);
+          min-height: calc(50px + 0.75em);
+        }
+
+        /* Modal Content */
+        .modal-content {
+          width: 95%;
+          max-width: 300px;
+        }
+
+        /* Font Sizes */
+        .rules-box h2 {
+          font-size: 1.5em;
+        }
+
+        .rules-box li {
+          font-size: 1em;
+        }
+
+        .game-info h2 {
+          font-size: 1.75em;
+        }
+
+        .game-info p {
+          font-size: 1.25em;
+        }
+
+        .player-card h3 {
+          font-size: 1.25em;
+        }
+
+        .player-card p {
+          font-size: 1em;
+        }
+
+        .rolls-line {
+          font-size: 0.95em;
+        }
+
+        .output-message {
+          font-size: 1em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <img src="./assets/logo2.png" alt="Logo" class="logo" />
+      <h1>Wise Roll 🎲</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Rules Section -->
+      <section class="rules-box">
+        <h2>Rules 📜</h2>
+        <ul>
+          <li>
+            🎯 <strong>Objective:</strong> Outscore your opponent over
+            <strong>3 parts</strong>.
+          </li>
+          <li>
+            💠 <strong>Each part:</strong> 5 rolls per player; quit early to
+            avoid <strong>rolling 4</strong>.
+          </li>
+          <li>
+            ❌ <strong>Rolling 4:</strong> Ends your turn immediately, resetting
+            part score to <strong>0</strong>.
+          </li>
+          <li>
+            🚀 <strong>Rolling 1:</strong> Adds
+            <strong>10 bonus points</strong>.
+          </li>
+          <li>
+            🏆 <strong>Total Score:</strong> Sum of part scores after each part.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Game Info -->
+      <div class="game-info">
+        <h2 id="turn-indicator">Player 1's Turn</h2>
+        <p id="part-indicator">Part 1</p>
+      </div>
+
+      <!-- Player Scores -->
+      <div class="player-scores">
+        <div id="player1-card" class="player-card active">
+          <h3>Player 1</h3>
+          <p id="player1-score">Part: 0 | Total: 0</p>
+        </div>
+        <div id="player2-card" class="player-card inactive">
+          <h3>Player 2</h3>
+          <p id="player2-score">Part: 0 | Total: 0</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button type="button" id="roll-button" class="roll-button">
+          Roll Dice
+        </button>
+        <div class="quit-part">
+          <button type="button" id="quit-button" class="quit-button">
+            Quit Part
+          </button>
+          <button
+            type="button"
+            id="toggle-game-button"
+            class="toggle-game-button"
+          >
+            Quit Game
+          </button>
+        </div>
+      </div>
+
+      <!-- Dice and Rolls Display -->
+      <div class="dice-rolls">
+        <div id="dice-images" class="dice-images"></div>
+        <div id="rolls-line" class="rolls-line"></div>
+        <div id="output-message" class="output-message"></div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <p id="created">created with</p>
+        <p id="javascript"><strong>JavaScript ❤️ Python </strong></p>
+      </div>
+    </footer>
+
+    <!-- Modal for Confirmation -->
+    <div id="confirm-modal" class="modal">
+      <div class="modal-content">
+        <h2>Confirm Quit</h2>
+        <p>Are you sure you want to quit the game?</p>
+        <div class="modal-buttons">
+          <button type="button" id="confirm-quit" class="confirm-button">
+            Yes, Quit
+          </button>
+          <button type="button" id="cancel-quit" class="cancel-button">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for End Game -->
+    <div id="endgame-modal" class="modal">
+      <div class="modal-content">
+        <h2>Game Over</h2>
+        <p id="endgame-message">Player X Wins! (Y - Z)</p>
+        <div class="modal-buttons">
+          <button type="button" id="restart-game" class="confirm-button">
+            Restart Game
+          </button>
+          <button type="button" id="close-endgame" class="cancel-button">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PyScript for Logic -->
+    <script type="py">
+      from js import window
+      import random
+
+      def roll_dice():
+          game_state = window.getGameState()
+          current_player = game_state.currentPlayer - 1
+          roll = random.randint(1, 6)
+          game_state.rolls.append(str(roll))
+
+          # Show Dice Image
+          window.showDiceImage(roll)
+
+          # Handle Roll
+          if roll == 4:
+              window.updateOutput("Oh no! Rolled a 4. Turn ends.")
+              game_state.players[current_player].partScore = 0
+              # Update Total Score
+              game_state.players[current_player].totalScore = game_state.players[current_player].previousTotal
+              game_state.rollCount += 1
+              window.updateDisplay()
+              window.disableRollButton()
+              window.switchTurn()
+              return
+          elif roll == 1:
+              game_state.players[current_player].partScore += 10
+              window.updateOutput("Great! Bonus 10 points!")
+          else:
+              game_state.players[current_player].partScore += roll
+              window.updateOutput("Keep going!")
+
+          # Update Total Score Simultaneously
+          game_state.players[current_player].totalScore = (
+              game_state.players[current_player].partScore +
+              game_state.players[current_player].previousTotal
+          )
+
+          # Check Roll Count
+          game_state.rollCount += 1
+          if game_state.rollCount >= game_state.maxRolls:
+              window.updateOutput("Rolls completed for this part.")
+              window.updateDisplay()
+              window.disableRollButton()
+              window.switchTurn()
+              return
+
+          # Update Display
+          window.updateDisplay()
+
+      # Expose roll_dice to JavaScript
+      window.pyRollDice = roll_dice
+    </script>
+
+    <!-- JavaScript -->
+    <script>
+      // DOM Elements
+      const turnIndicator = document.getElementById("turn-indicator");
+      const partIndicator = document.getElementById("part-indicator");
+      const player1Card = document.getElementById("player1-card");
+      const player2Card = document.getElementById("player2-card");
+      const player1Score = document.getElementById("player1-score");
+      const player2Score = document.getElementById("player2-score");
+      const rollButton = document.getElementById("roll-button");
+      const quitButton = document.getElementById("quit-button");
+      const toggleGameButton = document.getElementById("toggle-game-button");
+      const diceImagesDiv = document.getElementById("dice-images");
+      const rollsLine = document.getElementById("rolls-line");
+      const outputMessage = document.getElementById("output-message");
+
+      // Modal Elements
+      const confirmModal = document.getElementById("confirm-modal");
+      const confirmQuitButton = document.getElementById("confirm-quit");
+      const cancelQuitButton = document.getElementById("cancel-quit");
+
+      const endgameModal = document.getElementById("endgame-modal");
+      const endgameMessage = document.getElementById("endgame-message");
+      const restartGameButton = document.getElementById("restart-game");
+      const closeEndgameButton = document.getElementById("close-endgame");
+
+      // Game State
+      const gameState = {
+        currentPlayer: 1,
+        part: 1,
+        rollCount: 0,
+        rolls: [],
+        players: [
+          { totalScore: 0, partScore: 0, previousTotal: 0 },
+          { totalScore: 0, partScore: 0, previousTotal: 0 },
+        ],
+        maxRolls: 5,
+        maxParts: 3,
+        gameEnded: false,
+      };
+
+      // Dice Images
+      const diceImages = [
+        "./assets/dice-1.png",
+        "./assets/dice-2.png",
+        "./assets/dice-3.png",
+        "./assets/dice-4.png",
+        "./assets/dice-5.png",
+        "./assets/dice-6.png",
+      ];
+
+      // Update Display
+      function updateDisplay() {
+        turnIndicator.textContent = `Player ${gameState.currentPlayer}'s Turn`;
+        partIndicator.textContent = `Part ${gameState.part}`;
+        player1Score.textContent = `Part: ${gameState.players[0].partScore} | Total: ${gameState.players[0].totalScore}`;
+        player2Score.textContent = `Part: ${gameState.players[1].partScore} | Total: ${gameState.players[1].totalScore}`;
+
+        // Show rolls only if there are rolls
+        if (gameState.rolls.length > 0) {
+          rollsLine.textContent = `Rolls: ${gameState.rolls.join(" | ")}`;
+        } else {
+          rollsLine.textContent = "";
+        }
+
+        // Highlight active player
+        if (gameState.currentPlayer === 1) {
+          player1Card.classList.add("active");
+          player1Card.classList.remove("inactive");
+          player2Card.classList.add("inactive");
+          player2Card.classList.remove("active");
+        } else {
+          player2Card.classList.add("active");
+          player2Card.classList.remove("inactive");
+          player1Card.classList.add("inactive");
+          player1Card.classList.remove("active");
+        }
+      }
+
+      // Update Output Message
+      function updateOutput(message) {
+        outputMessage.textContent = message;
+      }
+
+      // Show Dice Image
+      function showDiceImage(roll) {
+        const img = document.createElement("img");
+        img.src = diceImages[roll - 1];
+        img.alt = `Dice ${roll}`;
+        diceImagesDiv.appendChild(img);
+      }
+
+      // Clear Dice Images and Rolls
+      function clearDiceDisplay() {
+        diceImagesDiv.innerHTML = "";
+        rollsLine.textContent = "";
+      }
+
+      // Disable Roll Button
+      function disableRollButton() {
+        rollButton.disabled = true;
+      }
+
+      // Enable Roll Button
+      function enableRollButton() {
+        rollButton.disabled = false;
+      }
+
+      // Switch Turns
+      function switchTurn() {
+        const current = gameState.currentPlayer - 1;
+        // Store the previous total for cumulative calculation
+        gameState.players[current].previousTotal =
+          gameState.players[current].totalScore;
+        // Reset part score
+        gameState.players[current].partScore = 0;
+        gameState.rollCount = 0;
+
+        setTimeout(() => {
+          // Clear dice images and rolls
+          clearDiceDisplay();
+          gameState.rolls = [];
+          // Remove "Rolls:" text after part finished
+          rollsLine.textContent = "";
+
+          // Move to the next player or part
+          if (gameState.currentPlayer === 2) {
+            if (gameState.part === gameState.maxParts) {
+              endGame();
+              return;
+            }
+            gameState.part++;
+          }
+          gameState.currentPlayer = gameState.currentPlayer === 1 ? 2 : 1;
+          // Enable Roll Button for next player
+          enableRollButton();
+          updateDisplay();
+          outputMessage.textContent = ""; // Clear the output message for the new turn
+        }, 3000); // Increased delay to 3 seconds
+      }
+
+      // End the Game
+      function endGame() {
+        disableRollButton();
+        quitButton.disabled = true;
+        const scores = gameState.players.map((p) => p.totalScore);
+        const winner =
+          scores[0] === scores[1]
+            ? "It's a Tie!"
+            : scores[0] > scores[1]
+            ? "Player 1 Wins!"
+            : "Player 2 Wins!";
+        // Prepare the end game message with comparison
+        endgameMessage.textContent = `Game Over! ${winner}\n\n${scores[0]} - ${scores[1]}`;
+        // Show the endgame modal
+        showEndgameModal();
+        toggleGameButton.textContent = "Restart Game"; // Change button text
+        gameState.gameEnded = true;
+      }
+
+      // Toggle Game (Quit or Restart)
+      function toggleGame() {
+        if (!gameState.gameEnded) {
+          // Show custom confirmation modal
+          showModal();
+        } else {
+          // Restart Game
+          restartGame();
+        }
+      }
+
+      // Show Confirmation Modal
+      function showModal() {
+        confirmModal.style.display = "flex";
+      }
+
+      // Hide Confirmation Modal
+      function hideModal() {
+        confirmModal.style.display = "none";
+      }
+
+      // Show Endgame Modal
+      function showEndgameModal() {
+        endgameModal.style.display = "flex";
+      }
+
+      // Hide Endgame Modal
+      function hideEndgameModal() {
+        endgameModal.style.display = "none";
+      }
+
+      // Restart Game
+      function restartGame() {
+        // Reset game state
+        gameState.currentPlayer = 1;
+        gameState.part = 1;
+        gameState.rollCount = 0;
+        gameState.rolls = [];
+        gameState.players = [
+          { totalScore: 0, partScore: 0, previousTotal: 0 },
+          { totalScore: 0, partScore: 0, previousTotal: 0 },
+        ];
+        gameState.gameEnded = false;
+        enableRollButton();
+        quitButton.disabled = true;
+        toggleGameButton.textContent = "Quit Game";
+        clearDiceDisplay();
+        updateOutput("");
+        updateDisplay();
+        hideEndgameModal();
+      }
+
+      // Confirm Quit Game
+      confirmQuitButton.addEventListener("click", () => {
+        // Proceed with quitting the game
+        disableRollButton();
+        quitButton.disabled = true;
+        updateOutput("Game has been quit. Thank you for playing!");
+        toggleGameButton.textContent = "Restart Game";
+        gameState.gameEnded = true;
+        hideModal();
+      });
+
+      // Cancel Quit Game
+      cancelQuitButton.addEventListener("click", () => {
+        // Do nothing, just hide the modal
+        hideModal();
+      });
+
+      // Close Endgame Modal
+      closeEndgameButton.addEventListener("click", () => {
+        hideEndgameModal();
+      });
+
+      // Restart Game from Endgame Modal
+      restartGameButton.addEventListener("click", () => {
+        restartGame();
+      });
+
+      // Close modal when clicking outside the modal content
+      window.addEventListener("click", (event) => {
+        if (event.target == confirmModal) {
+          hideModal();
+        }
+        if (event.target == endgameModal) {
+          hideEndgameModal();
+        }
+      });
+
+      // Attach Event Handlers
+      rollButton.addEventListener("click", () => {
+        if (!gameState.gameEnded) {
+          window.pyRollDice(); // Call Python logic
+          quitButton.disabled = false; // Enable Quit Part button after first roll
+        }
+      });
+
+      quitButton.addEventListener("click", () => {
+        updateOutput(`Part ended. Turn passes to the next player.`);
+        disableRollButton(); // Disable Roll Button
+        switchTurn();
+      });
+
+      toggleGameButton.addEventListener("click", () => {
+        toggleGame();
+      });
+
+      // Expose State and Functions to Python
+      window.getGameState = () => gameState;
+      window.updateDisplay = updateDisplay;
+      window.updateOutput = updateOutput;
+      window.showDiceImage = showDiceImage;
+      window.switchTurn = switchTurn;
+      window.disableRollButton = disableRollButton;
+      window.enableRollButton = enableRollButton;
+
+      // Initial Display Update
+      updateDisplay();
+    </script>
+  </body>
+</html>
