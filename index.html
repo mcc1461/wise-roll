@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wise Roll</title>
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="./dist/output.css" />
     <link rel="icon" href="favicon.ico" />
     <!-- PyScript -->
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
@@ -22,6 +21,14 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+      }
+
+      /* Ensure consistent box sizing */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
       }
 
       /* Header */
@@ -45,6 +52,7 @@
         left: 2%;
         top: 10%;
         width: 9em; /* Relative sizing */
+        max-width: 100%; /* Ensure logo doesn't overflow */
         height: auto;
       }
 
@@ -106,10 +114,11 @@
         justify-content: space-between;
         margin-bottom: 2em;
         padding: 0 10%;
+        flex-wrap: wrap; /* Allow items to wrap on smaller screens */
       }
       .player-card {
         flex: 1;
-        margin: 0 0.5em;
+        margin: 0.5em; /* Adjusted margin to prevent overflow */
         padding: 1em;
         border-radius: 0.75em;
         text-align: center;
@@ -145,6 +154,7 @@
         margin-bottom: 2em;
         flex-wrap: wrap;
         gap: 2em;
+        max-width: 100%; /* Ensure it doesn't overflow */
       }
       .action-buttons button {
         padding: 0.75em 2em;
@@ -190,6 +200,7 @@
         position: relative;
         padding: 0.5em;
         margin-bottom: 2em;
+        max-width: 100%; /* Ensure button doesn't overflow */
 
         /* Improved Text Readability */
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -261,6 +272,8 @@
         font-size: 1.5em;
         justify-content: space-around;
         gap: 1em;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        max-width: 100%; /* Ensure it doesn't overflow */
       }
       .toggle-game-button {
         background-color: #dd6b20; /* Sunset Orange */
@@ -293,6 +306,7 @@
         justify-content: center;
         flex-wrap: wrap;
         min-height: 55px !important;
+        max-width: 100%; /* Ensure it doesn't overflow */
       }
       .dice-images img {
         width: 5em !important; /* Relative sizing */
@@ -395,17 +409,351 @@
         transform: translateY(-2px);
       }
 
+      /* Extra Small Devices (Phones, up to 320px) */
+      @media only screen and (max-width: 320px) {
+        /* Your styles here */
+        body {
+          min-width: 100% !important;
+          min-height: 100vh !important;
+          overflow-x: hidden !important; /* Prevent horizontal scrolling */
+        }
+
+        /* Ensure consistent box sizing */
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box !important;
+        }
+
+        /* Header */
+        header {
+          background-color: red; /* Deep Purple */
+          padding: 0.3em 0 !important;
+        }
+        header h1 {
+          font-size: 1.3em !important; /* Scalable font size */
+        }
+
+        /* Logo */
+        #logo {
+          max-height: 2.5em !important;
+          padding: 0.15em !important;
+          top: 0.3em !important;
+          width: 5em !important;
+          /* Relative sizing */
+        }
+        /* Main Content */
+        main {
+          max-width: 97% !important;
+          width: 97% !important;
+          margin: 0.3em !important;
+          padding: 0.5em !important;
+          border-radius: 1em !important;
+        }
+
+        /* Rules Section */
+        .rules-box {
+          max-width: 100% !important;
+          border-left: 0.3em solid #38b2ac; /* Bright Cyan border */
+          color: #2d3748; /* Dark Slate text */
+          padding: 0.3em !important;
+          font-size: xx-small !important;
+          margin-bottom: 0.7em !important;
+          border-radius: 0.5em !important;
+          padding: 0.1em !important;
+          margin: 0;
+        }
+        .rules-box h2 {
+          font-size: x-small !important;
+          padding: 0.1em !important;
+          margin-bottom: 0.1em !important;
+        }
+        .rules-box ul {
+          padding-left: 0.3em !important;
+          list-style-type: none !important;
+        }
+        .rules-box li {
+          margin-bottom: 0.5em !important;
+          font-size: 1em !important;
+        }
+
+        /* Game Info */
+        .game-info {
+          margin-bottom: 0.7em;
+        }
+        .game-info h2 {
+          margin: 0 !important;
+          font-size: 1em !important;
+        }
+        .game-info p {
+          margin: 0 0 0.3em 0 !important;
+          font-size: 0.9em !important;
+        }
+        /* Player Scores */
+        .player-scores {
+          margin-bottom: 0.7em !important;
+        }
+        .player-card {
+          margin: 0.2em !important; /* Adjusted margin to prevent overflow */
+          padding: 0.3em !important;
+          border-radius: 0.75em;
+        }
+        .player-card h3 {
+          margin-top: 0;
+          font-size: 1.15em !important;
+        }
+        .player-card p {
+          margin: 0.25em 0 0 !important;
+          font-size: 1em !important;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+          margin-top: 1.2em !important;
+          margin-bottom: 1.2em !important;
+          gap: 0.5em !important;
+          max-width: 100% !important; /* Ensure it doesn't overflow */
+        }
+        .action-buttons button {
+          padding: 0.25em 0.5em !important;
+        }
+
+        .quit-button {
+          min-width: 20vw !important;
+          max-width: 35vw !important;
+          font-size: 0.5em !important;
+        }
+        /* Roll Button */
+        .roll-button {
+          min-width: 35vw !important;
+          min-height: 10vw !important;
+          max-height: 10vw !important;
+          max-width: 55vw !important;
+          border-radius: 7em !important; /* Fully rounded */
+          padding: 0.5em;
+          margin-top: 1em !important;
+          margin-bottom: 1em !important;
+        }
+        #roll-button {
+          font-size: 1em !important;
+        }
+        /* Enhanced Hover and Focus Effects */
+        /* Refined Ring Animation */
+        .roll-button::before {
+          content: "";
+          width: 100%;
+          height: 100%;
+          border-radius: 3em;
+          border: 0.3em solid #09909999; /* Semi-transparent border */
+          box-shadow: 0 0 25px rgba(56, 178, 172, 0.3); /* Subtle shadow */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .roll-button:hover::before,
+        .roll-button:focus::before {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(0.5) !important; /* Expand the ring */
+        }
+
+        /* Remove Existing ::after Pseudo-element if Not Needed */
+        .roll-button::after {
+          display: none; /* Hide the existing ::after for clarity */
+        }
+
+        /* Optional Continuous Ring Animation */
+        @keyframes alternate-ring {
+          0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.7;
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 0;
+          }
+        }
+
+        .roll-button::before {
+          animation: alternate-ring 3s infinite;
+        }
+
+        .roll-button:hover::before,
+        .roll-button:focus::before {
+          animation: none; /* Stop animation on hover/focus */
+        }
+
+        /* Quit Game Button */
+        .quit-part {
+          display: flex;
+          font-size: 1.5em;
+          justify-content: space-around;
+          gap: 1em;
+          flex-wrap: wrap; /* Allow wrapping on smaller screens */
+          max-width: 100%; /* Ensure it doesn't overflow */
+        }
+        .quit-button.game {
+          background-color: #dd6b20 !important; /* Sunset Orange */
+        }
+        .quit-button.part {
+          background-color: #c53030 !important; /* Darker Red */
+        }
+
+        .toggle-game-button:hover,
+        .toggle-game-button:focus {
+          background-color: #c05621; /* Darker Sunset Orange on hover */
+          transform: translateY(-2px);
+        }
+
+        .quit-button:hover,
+        .quit-button:focus {
+          background-color: #9b2c2c; /* Even Darker Red on hover */
+          transform: translateY(-2px);
+        }
+
+        /* Dice and Rolls Display */
+        .dice-rolls {
+          text-align: center;
+          margin-bottom: 0.5em;
+        }
+        .dice-images {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          min-height: 45px !important;
+          max-width: 100%; /* Ensure it doesn't overflow */
+        }
+        .dice-images img {
+          width: 2.3em !important; /* Relative sizing */
+          height: 2.3em !important; /* Relative sizing */
+          margin: 0.3em;
+        }
+        .rolls-line {
+          min-height: 2em !important;
+          font-size: 1em !important;
+          margin-top: 0.15em !important;
+        }
+        .output-message {
+          min-height: 1.1em !important;
+          font-size: 0.9em !important;
+        }
+
+        /* Footer */
+        footer {
+          font-size: 0.41em !important;
+          padding: 0.2em;
+          box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+        }
+        footer #created {
+          font-size: 1.1em !important;
+          color: rgba(9, 254, 225, 0.7) !important; /* Cool Gray */
+          margin-bottom: -1em;
+        }
+
+        /* Modal Styles */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1000; /* Sit on top */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+          align-items: center;
+          justify-content: center;
+        }
+
+        .modal-content {
+          background-color: #4a5568; /* Darker Blue-Gray */
+          margin: auto; /* Center horizontally */
+          padding: 2em;
+          border: 0.2em solid #38b2ac; /* Bright Cyan border */
+          width: 90%;
+          max-width: 450px; /* Increased max-width */
+          border-radius: 1em;
+          text-align: center;
+          color: #edf2f7; /* Very Light Gray */
+        }
+
+        .modal-buttons {
+          margin-top: 1.5em;
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+        }
+
+        .modal-buttons button {
+          padding: 0.75em 1.5em;
+          font-size: 1em;
+          border: none;
+          border-radius: 0.5em;
+          cursor: pointer;
+          margin: 0.5em;
+          min-width: 120px;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .confirm-button {
+          background-color: #dd6b20; /* Sunset Orange */
+          color: #ffffff;
+        }
+
+        .cancel-button {
+          background-color: #c53030; /* Darker Red */
+          color: #ffffff;
+        }
+
+        .confirm-button:hover,
+        .confirm-button:focus {
+          background-color: #c05621; /* Darker Sunset Orange on hover */
+          transform: translateY(-2px);
+        }
+
+        .cancel-button:hover,
+        .cancel-button:focus {
+          background-color: #9b2c2c; /* Even Darker Red on hover */
+          transform: translateY(-2px);
+        }
+      }
+
+      /* Small Devices (Phones, 321px to 480px) */
+      @media only screen and (min-width: 321px) and (max-width: 480px) {
+        /* Your styles here */
+      }
+
+      /* Medium Devices (Phones, 481px to 768px) */
+      @media only screen and (min-width: 481px) and (max-width: 768px) {
+        /* Your styles here */
+      }
+
+      /* Large Devices (Tablets, 769px to 1024px) */
+      @media only screen and (min-width: 769px) and (max-width: 1024px) {
+        /* Your styles here */
+      }
+
+      /* Extra Large Devices (larger than 1024px) */
+      @media only screen and (min-width: 1025px) {
+        /* Styles for larger devices like desktops */
+      }
+
       /* Responsive Design */
-      @media (max-width: 768px) {
+      @media (min-width: 481px) and (max-width: 768px) {
         /* Player Scores: Stack vertically */
         .player-scores {
           flex-direction: column;
           padding: 0;
+          align-items: center;
         }
 
         .player-card {
           margin: 0.5em 0;
           padding: 1em;
+          width: 100%;
         }
 
         /* Action Buttons: Stack vertically */
@@ -475,7 +823,7 @@
         /* Further adjustments for very small screens */
 
         /* Header */
-        .logo {
+        #logo {
           width: 5em;
         }
 
@@ -544,12 +892,373 @@
           font-size: 1em;
         }
       }
+      @media (max-width: 300px) {
+        header h1 {
+          font-size: 1.3em !important; /* Scalable font size */
+        }
+        .logo {
+          width: 0.5em !important; /* Ensure logo doesn't overflow */
+        }
+
+        /* Main Content */
+        main {
+          flex: 1;
+          max-width: 90%;
+          width: 90%;
+          margin: 2em auto;
+          padding: 1.5em;
+          background-color: #ffffff; /* White */
+          border-radius: 1em;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Rules Section */
+        .rules-box {
+          background-color: #d1f1f1; /* Very Light Gray */
+          border-left: 0.3em solid #38b2ac; /* Bright Cyan border */
+          color: #2d3748; /* Dark Slate text */
+          padding: 1em;
+          margin-bottom: 2em;
+          border-radius: 0.5em;
+        }
+        .rules-box h2 {
+          margin-top: 0;
+          font-size: 1.75em;
+          color: #6b46c1; /* Deep Purple */
+        }
+        .rules-box ul {
+          padding-left: 1.5em;
+        }
+        .rules-box li {
+          margin-bottom: 0.75em;
+          font-size: 1.25em;
+        }
+
+        /* Game Info */
+        .game-info {
+          text-align: center;
+          margin-bottom: 1em;
+        }
+        .game-info h2 {
+          margin: 0;
+          font-size: 2.5em;
+          font-weight: bold;
+          color: #38b2ac; /* Bright Cyan */
+        }
+        .game-info p {
+          margin: 0.5em 0 0;
+          font-size: 2.1em;
+          font-weight: bold;
+          color: #6b46c1; /* Deep Purple */
+        }
+
+        /* Player Scores */
+        .player-scores {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 2em;
+          padding: 0 10%;
+          flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+        }
+        .player-card {
+          flex: 1;
+          margin: 0.5em; /* Adjusted margin to prevent overflow */
+          padding: 1em;
+          border-radius: 0.75em;
+          text-align: center;
+          font-weight: bold;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .player-card.active {
+          background-color: #6b46c1; /* Deep Purple */
+          color: #edf2f7; /* Soft Gray */
+          border: 0.2em solid #38b2ac; /* Bright Cyan border */
+          box-shadow: 0 0 15px rgba(56, 178, 172, 0.6); /* Subtle Cyan shadow */
+        }
+        .player-card.inactive {
+          background-color: #f1f1ff; /* Medium Gray */
+          color: #2d3748; /* Dark Slate text */
+        }
+        .player-card h3 {
+          margin-top: 0;
+          font-size: 1.75em;
+        }
+        .player-card p {
+          margin: 0.75em 0 0;
+          font-size: 1.5em;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-top: 4em !important;
+          margin-bottom: 2em;
+          flex-wrap: wrap;
+          gap: 2em;
+          max-width: 100%; /* Ensure it doesn't overflow */
+        }
+        .action-buttons button {
+          padding: 0.75em 2em;
+          font-size: 1em;
+          font-weight: bold;
+          border: none;
+          border-radius: 0.5em;
+          cursor: pointer;
+          min-width: 140px;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .action-buttons button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        /* Roll Button */
+        .roll-button {
+          min-width: 220px !important;
+          min-height: 70px;
+          display: inline-flex;
+          font-family: "Nunito", sans-serif;
+          font-size: 2em !important;
+          font-weight: 700;
+          align-items: center;
+          justify-content: center;
+          text-transform: uppercase;
+          text-align: center;
+          letter-spacing: 1.3px;
+          color: #ffffff; /* White text for better contrast */
+          background: linear-gradient(
+            90deg,
+            #099099 0%,
+            /* Bright Cyan */ #6b46c1 100% /* Deep Purple */
+          );
+          border: none;
+          border-radius: 7em !important; /* Fully rounded */
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
+            background 0.3s ease-in-out;
+          cursor: pointer;
+          outline: none;
+          position: relative;
+          padding: 0.5em;
+          margin-bottom: 2em;
+          max-width: 100%; /* Ensure button doesn't overflow */
+
+          /* Improved Text Readability */
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Enhanced Hover and Focus Effects */
+        .roll-button:hover,
+        .roll-button:focus {
+          transform: scale(1.07); /* Slightly enlarge the button */
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+          background: linear-gradient(
+            90deg,
+            #6b46c1 0%,
+            /* Deep Purple */ #099099 100% /* Bright Cyan */
+          );
+        }
+
+        /* Refined Ring Animation */
+        .roll-button::before {
+          content: "";
+          width: 100%;
+          height: 100%;
+          border-radius: 3em;
+          border: 0.3em solid #09909999; /* Semi-transparent border */
+          box-shadow: 0 0 25px rgba(56, 178, 172, 0.3); /* Subtle shadow */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .roll-button:hover::before,
+        .roll-button:focus::before {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.5); /* Expand the ring */
+        }
+
+        /* Remove Existing ::after Pseudo-element if Not Needed */
+        .roll-button::after {
+          display: none; /* Hide the existing ::after for clarity */
+        }
+
+        /* Optional Continuous Ring Animation */
+        @keyframes alternate-ring {
+          0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.7;
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 0;
+          }
+        }
+
+        .roll-button::before {
+          animation: alternate-ring 3s infinite;
+        }
+
+        .roll-button:hover::before,
+        .roll-button:focus::before {
+          animation: none; /* Stop animation on hover/focus */
+        }
+
+        /* Quit Game Button */
+        .quit-part {
+          display: flex;
+          font-size: 1.5em;
+          justify-content: space-around;
+          gap: 1em;
+          flex-wrap: wrap; /* Allow wrapping on smaller screens */
+          max-width: 100%; /* Ensure it doesn't overflow */
+        }
+        .toggle-game-button {
+          background-color: #dd6b20; /* Sunset Orange */
+          color: #ffffff;
+        }
+        .quit-button {
+          background-color: #c53030; /* Darker Red */
+          color: #ffffff;
+        }
+
+        .toggle-game-button:hover,
+        .toggle-game-button:focus {
+          background-color: #c05621; /* Darker Sunset Orange on hover */
+          transform: translateY(-2px);
+        }
+
+        .quit-button:hover,
+        .quit-button:focus {
+          background-color: #9b2c2c; /* Even Darker Red on hover */
+          transform: translateY(-2px);
+        }
+
+        /* Dice and Rolls Display */
+        .dice-rolls {
+          text-align: center;
+          margin-bottom: 0.5em;
+        }
+        .dice-images {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          min-height: 55px !important;
+          max-width: 100%; /* Ensure it doesn't overflow */
+        }
+        .dice-images img {
+          width: 5em !important; /* Relative sizing */
+          height: 5em !important; /* Relative sizing */
+          margin: 0.3em;
+        }
+        .rolls-line {
+          min-height: 3.5em;
+          font-size: 2.25em;
+          margin-top: 0.5em;
+          font-weight: bold;
+          color: #099099; /* Bright Cyan */
+        }
+        .output-message {
+          min-height: 2em;
+          font-size: 1.5em;
+          font-weight: bold;
+          color: #6b46c1; /* Deep Purple */
+        }
+
+        /* Footer */
+        footer {
+          background-color: #252858; /* Dark Slate */
+          color: rgb(9, 254, 225); /* Cool Gray */
+          text-align: center;
+          font-size: 1.5em;
+          padding: 0.5em;
+          box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+        }
+        footer #created {
+          font-size: 1.1em !important;
+          color: rgba(9, 254, 225, 0.7) !important; /* Cool Gray */
+          margin-bottom: -1em;
+        }
+
+        /* Modal Styles */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1000; /* Sit on top */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+          align-items: center;
+          justify-content: center;
+        }
+
+        .modal-content {
+          background-color: #4a5568; /* Darker Blue-Gray */
+          margin: auto; /* Center horizontally */
+          padding: 2em;
+          border: 0.2em solid #38b2ac; /* Bright Cyan border */
+          width: 90%;
+          max-width: 450px; /* Increased max-width */
+          border-radius: 1em;
+          text-align: center;
+          color: #edf2f7; /* Very Light Gray */
+        }
+
+        .modal-buttons {
+          margin-top: 1.5em;
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+        }
+
+        .modal-buttons button {
+          padding: 0.75em 1.5em;
+          font-size: 1em;
+          border: none;
+          border-radius: 0.5em;
+          cursor: pointer;
+          margin: 0.5em;
+          min-width: 120px;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .confirm-button {
+          background-color: #dd6b20; /* Sunset Orange */
+          color: #ffffff;
+        }
+
+        .cancel-button {
+          background-color: #c53030; /* Darker Red */
+          color: #ffffff;
+        }
+
+        .confirm-button:hover,
+        .confirm-button:focus {
+          background-color: #c05621; /* Darker Sunset Orange on hover */
+          transform: translateY(-2px);
+        }
+
+        .cancel-button:hover,
+        .cancel-button:focus {
+          background-color: #9b2c2c; /* Even Darker Red on hover */
+          transform: translateY(-2px);
+        }
+      }
     </style>
   </head>
   <body>
     <!-- Header -->
     <header>
-      <img src="./assets/logo2.png" alt="Logo" class="logo" />
+      <img src="./assets/logo2.png" alt="Logo" class="logo" id="logo" />
       <h1>Wise Roll 🎲</h1>
     </header>
 
@@ -605,13 +1314,13 @@
           Roll Dice
         </button>
         <div class="quit-part">
-          <button type="button" id="quit-button" class="quit-button">
+          <button type="button" id="quit-button" class="quit-button part">
             Quit Part
           </button>
           <button
             type="button"
             id="toggle-game-button"
-            class="toggle-game-button"
+            class="toggle-game-button quit-button game"
           >
             Quit Game
           </button>
