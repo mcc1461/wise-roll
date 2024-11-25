@@ -6,6 +6,12 @@
     <title>Wise Roll</title>
     <!-- Stylesheets -->
     <link rel="icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+
     <!-- PyScript -->
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
@@ -170,7 +176,6 @@
         cursor: not-allowed;
       }
 
-      /* Roll Button */
       .roll-button {
         min-width: 220px !important;
         min-height: 70px;
@@ -198,71 +203,23 @@
         outline: none;
         position: relative;
         padding: 0.5em;
-        margin-bottom: 2em;
+        margin-bottom: 1em;
         max-width: 100%; /* Ensure button doesn't overflow */
 
         /* Improved Text Readability */
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
-
-      /* Enhanced Hover and Focus Effects */
-      .roll-button:hover,
-      .roll-button:focus {
-        transform: scale(1.07); /* Slightly enlarge the button */
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
-        background: linear-gradient(
-          90deg,
-          #6b46c1 0%,
-          /* Deep Purple */ #099099 100% /* Bright Cyan */
-        );
+      .roll-button:before {
+        border-radius: 7em !important;
+        height: 0%;
+        width: 2px;
       }
-
-      /* Refined Ring Animation */
-      .roll-button::before {
-        content: "";
-        width: 100%;
-        height: 100%;
-        border-radius: 3em;
-        border: 0.3em solid #09909999; /* Semi-transparent border */
-        box-shadow: 0 0 25px rgba(56, 178, 172, 0.3); /* Subtle shadow */
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      }
-
-      .roll-button:hover::before,
-      .roll-button:focus::before {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.5); /* Expand the ring */
-      }
-
-      /* Remove Existing ::after Pseudo-element if Not Needed */
-      .roll-button::after {
-        display: none; /* Hide the existing ::after for clarity */
-      }
-
-      /* Optional Continuous Ring Animation */
-      @keyframes alternate-ring {
-        0% {
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 0.7;
-        }
-        100% {
-          transform: translate(-50%, -50%) scale(2);
-          opacity: 0;
-        }
-      }
-
-      .roll-button::before {
-        animation: alternate-ring 3s infinite;
-      }
-
-      .roll-button:hover::before,
-      .roll-button:focus::before {
-        animation: none; /* Stop animation on hover/focus */
+      .roll-button:hover {
+        border-radius: 7em !important;
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+          -4px -4px 6px 0 rgba(116, 125, 136, 0.5),
+          inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+          inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
       }
 
       /* Quit Game Button */
@@ -536,54 +493,6 @@
         #roll-button {
           font-size: 1em !important;
         }
-        /* Enhanced Hover and Focus Effects */
-        /* Refined Ring Animation */
-        .roll-button::before {
-          content: "";
-          width: 100%;
-          height: 100%;
-          border-radius: 3em;
-          border: 0.3em solid #09909999; /* Semi-transparent border */
-          box-shadow: 0 0 25px rgba(56, 178, 172, 0.3); /* Subtle shadow */
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 0;
-          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        .roll-button:hover::before,
-        .roll-button:focus::before {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(0.5) !important; /* Expand the ring */
-        }
-
-        /* Remove Existing ::after Pseudo-element if Not Needed */
-        .roll-button::after {
-          display: none; /* Hide the existing ::after for clarity */
-        }
-
-        /* Optional Continuous Ring Animation */
-        @keyframes alternate-ring {
-          0% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.7;
-          }
-          100% {
-            transform: translate(-50%, -50%) scale(2);
-            opacity: 0;
-          }
-        }
-
-        .roll-button::before {
-          animation: alternate-ring 3s infinite;
-        }
-
-        .roll-button:hover::before,
-        .roll-button:focus::before {
-          animation: none; /* Stop animation on hover/focus */
-        }
 
         /* Quit Game Button */
         .quit-part {
@@ -594,25 +503,6 @@
           flex-wrap: wrap; /* Allow wrapping on smaller screens */
           max-width: 100%; /* Ensure it doesn't overflow */
         }
-        .quit-button.game {
-          background-color: #dd6b20 !important; /* Sunset Orange */
-        }
-        .quit-button.part {
-          background-color: #c53030 !important; /* Darker Red */
-        }
-
-        .toggle-game-button:hover,
-        .toggle-game-button:focus {
-          background-color: #c05621; /* Darker Sunset Orange on hover */
-          transform: translateY(-2px);
-        }
-
-        .quit-button:hover,
-        .quit-button:focus {
-          background-color: #9b2c2c; /* Even Darker Red on hover */
-          transform: translateY(-2px);
-        }
-
         /* Dice and Rolls Display */
         .dice-rolls {
           text-align: center;
@@ -738,11 +628,10 @@
 
         /* Header */
         header {
-          background-color: aqua !important; /* Deep Purple */
-          padding: 0.3em 0 !important;
+          padding: 0.5em 0 !important;
         }
         header h1 {
-          font-size: 1.3em !important; /* Scalable font size */
+          font-size: 1.5em !important; /* Scalable font size */
         }
 
         /* Logo */
@@ -768,14 +657,14 @@
           border-left: 0.3em solid #38b2ac; /* Bright Cyan border */
           color: #2d3748; /* Dark Slate text */
           padding: 0.3em !important;
-          font-size: xx-small !important;
+          font-size: x-small !important;
           margin-bottom: 0.7em !important;
           border-radius: 0.5em !important;
           padding: 0.1em !important;
           margin: 0;
         }
         .rules-box h2 {
-          font-size: x-small !important;
+          font-size: small !important;
           padding: 0.1em !important;
           margin-bottom: 0.1em !important;
         }
@@ -848,54 +737,6 @@
         #roll-button {
           font-size: 1em !important;
         }
-        /* Enhanced Hover and Focus Effects */
-        /* Refined Ring Animation */
-        .roll-button::before {
-          content: "";
-          width: 100%;
-          height: 100%;
-          border-radius: 3em;
-          border: 0.3em solid #09909999; /* Semi-transparent border */
-          box-shadow: 0 0 25px rgba(56, 178, 172, 0.3); /* Subtle shadow */
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 0;
-          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        .roll-button:hover::before,
-        .roll-button:focus::before {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(0.5) !important; /* Expand the ring */
-        }
-
-        /* Remove Existing ::after Pseudo-element if Not Needed */
-        .roll-button::after {
-          display: none; /* Hide the existing ::after for clarity */
-        }
-
-        /* Optional Continuous Ring Animation */
-        @keyframes alternate-ring {
-          0% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.7;
-          }
-          100% {
-            transform: translate(-50%, -50%) scale(2);
-            opacity: 0;
-          }
-        }
-
-        .roll-button::before {
-          animation: alternate-ring 3s infinite;
-        }
-
-        .roll-button:hover::before,
-        .roll-button:focus::before {
-          animation: none; /* Stop animation on hover/focus */
-        }
 
         /* Quit Game Button */
         .quit-part {
@@ -905,24 +746,6 @@
           gap: 1em;
           flex-wrap: wrap; /* Allow wrapping on smaller screens */
           max-width: 100%; /* Ensure it doesn't overflow */
-        }
-        .quit-button.game {
-          background-color: #dd6b20 !important; /* Sunset Orange */
-        }
-        .quit-button.part {
-          background-color: #c53030 !important; /* Darker Red */
-        }
-
-        .toggle-game-button:hover,
-        .toggle-game-button:focus {
-          background-color: #c05621; /* Darker Sunset Orange on hover */
-          transform: translateY(-2px);
-        }
-
-        .quit-button:hover,
-        .quit-button:focus {
-          background-color: #9b2c2c; /* Even Darker Red on hover */
-          transform: translateY(-2px);
         }
 
         /* Dice and Rolls Display */
