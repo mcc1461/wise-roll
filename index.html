@@ -1248,22 +1248,30 @@
     <!-- PYTHON for Logic and Game State Management -->
     <script type="py">
       from js import window
-      import random
+      from random import SystemRandom
+      sys_rand = SystemRandom()
 
       def roll_dice():
           game_state = window.getGameState()
           current_player = game_state.currentPlayer - 1
-          roll = random.randint(1, 6)
-          game_state.rolls.append(str(roll))
 
-          # Show Dice Image
+          # Get the previous roll if exists.
+          prev_roll = int(game_state.rolls[-1]) if game_state.rolls else None
+
+          # Force a re-roll if we get the same number as the previous roll.
+          roll = sys_rand.randint(1, 6)
+          # To limit endless loops, try up to 10 times; if we still get a duplicate, accept it.
+          attempts = 0
+          while prev_roll is not None and roll == prev_roll and attempts < 10:
+              roll = sys_rand.randint(1, 6)
+              attempts += 1
+
+          game_state.rolls.append(str(roll))
           window.showDiceImage(roll)
 
-          # Handle Roll
           if roll == 4:
               window.updateOutput("Oh no! Rolled a 4. Turn ends.")
               game_state.players[current_player].partScore = 0
-              # Update Total Score
               game_state.players[current_player].totalScore = game_state.players[current_player].previousTotal
               game_state.rollCount += 1
               window.updateDisplay()
@@ -1277,13 +1285,10 @@
               game_state.players[current_player].partScore += roll
               window.updateOutput("Keep going!")
 
-          # Update Total Score Simultaneously
           game_state.players[current_player].totalScore = (
               game_state.players[current_player].partScore +
               game_state.players[current_player].previousTotal
           )
-
-          # Check Roll Count
           game_state.rollCount += 1
           if game_state.rollCount >= game_state.maxRolls:
               window.updateOutput("Rolls completed for this part.")
@@ -1292,11 +1297,10 @@
               window.switchTurn()
               return
 
-          # Update Display
           window.updateDisplay()
 
-      # Expose roll_dice to JavaScript
       window.pyRollDice = roll_dice
+      print("pyRollDice attached to window.")
     </script>
 
     <!-- JAVASCRIPT for DOM Manipulation -->
